@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>GreenVerse - Jardin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="logo"><span>🌱</span>GreenVerse</a>
+  <div>
+    <a href="index.html">Accueil</a>
+    <a href="jardin.html">Jardin</a>
+    <a href="tableaux.html">Infos Plantes</a>
+    <a href="ateliers.html">Ateliers</a>
+    <a href="shop.html">Boutique</a>
+    <a href="blog.html">Blog</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="faq.html">FAQ</a>
+    <a href="astuce.html">Astuce du jour</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html" class="active">À propos</a>
+  </div>
+</nav>
+
+<!-- CATEGORIES -->
+<section class="categories-cards">
+  <a href="#fleurs"      class="cat-card">🌸 Fleurs</a>
+  <a href="#potager"     class="cat-card">🥕 Potager</a>
+  <a href="#aromatiques" class="cat-card">🌿 Aromatiques</a>
+  <a href="#arbustes"    class="cat-card">🌺 Arbustes</a>
+  <a href="#arbres"      class="cat-card">🌳 Arbres</a>
+  <a href="#aquatiques"  class="cat-card">🌊 Aquatiques</a>
+  <a href="#grimpantes"  class="cat-card">🍃 Grimpantes</a>
+</section>
+
+<!-- ================= FLEURS ================= -->
+<section id="fleurs">
+  <h2>🌸 Fleurs</h2>
+  <div class="plants-section" id="container-fleurs">
+    <p class="loading">Chargement...</p>
+  </div>
+</section>
+
+<!-- ================= POTAGER ================= -->
+<section id="potager">
+  <h2>🥕 Plantes potagères</h2>
+  <div class="plants-section" id="container-potager">
+    <p class="loading">Chargement...</p>
+  </div>
+</section>
+
+<!-- ================= AROMATIQUES ================= -->
+<section id="aromatiques">
+  <h2>🌿 Plantes aromatiques</h2>
+  <div class="plants-section" id="container-aromatiques">
+    <p class="loading">Chargement...</p>
+  </div>
+</section>
+
+<!-- ================= ARBUSTES ================= -->
+<section id="arbustes">
+  <h2>🌺 Arbustes</h2>
+  <div class="plants-section" id="container-arbustes">
+    <p class="loading">Chargement...</p>
+  </div>
+</section>
+
+<!-- ================= ARBRES ================= -->
+<section id="arbres">
+  <h2>🌳 Arbres</h2>
+  <div class="plants-section" id="container-arbres">
+    <p class="loading">Chargement...</p>
+  </div>
+</section>
+
+<!-- ================= AQUATIQUES ================= -->
+<section id="aquatiques">
+  <h2>🌊 Plantes aquatiques</h2>
+  <div class="plants-section" id="container-aquatiques">
+    <p class="loading">Chargement...</p>
+  </div>
+</section>
+
+<!-- ================= GRIMPANTES ================= -->
+<section id="grimpantes">
+  <h2>🍃 Plantes grimpantes</h2>
+  <div class="plants-section" id="container-grimpantes">
+    <p class="loading">Chargement...</p>
+  </div>
+</section>
+
+<footer>
+  © 2025 GreenVerse
+</footer>
+
+<!-- ================= SCRIPT JS ================= -->
+<script>
+  const categories = [
+    'fleurs',
+    'potager',
+    'aromatiques',
+    'arbustes',
+    'arbres',
+    'aquatiques',
+    'grimpantes'
+  ];
+
+  categories.forEach(cat => {
+    const container = document.getElementById(`container-${cat}`);
+
+    // PAR cette ligne :  
+    fetch(`http://localhost/projet%20php%20IA/GreenVerse/backend/plantes/read.php?categorie=${cat}`)
+      .then(res => {
+        if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`);
+        return res.json();
+      })
+      .then(plantes => {
+        container.innerHTML = '';
+
+        if (!plantes || plantes.length === 0) {
+          container.innerHTML = `<p class="empty">Aucune plante disponible.</p>`;
+          return;
+        }
+
+        plantes.forEach(plante => {
+          const nomSlug = plante.nom.toLowerCase().normalize("NFD")
+                          .replace(/[\u0300-\u036f]/g, "")
+                          .replace(/\s+/g, '-');
+
+          container.innerHTML += `
+            <a href="#${nomSlug}" class="plant-card">
+              <img 
+                src="http://localhost/projet%20php%20IA/GreenVerse/${plante.image}"
+                alt="${plante.nom}"
+                onerror="this.src='http://localhost/projet%20php%20IA/projet%20jardin%20v2/images/default.jpg'"
+              >
+              <h3>${plante.nom}</h3>
+              <p>${plante.description} ${plante.emoji}</p>
+            </a>
+          `;
+        });
+      })
+      .catch(err => {
+        container.innerHTML = `<p class="erreur">❌ Erreur de chargement : ${err.message}</p>`;
+        console.error(`Erreur catégorie [${cat}] :`, err);
+      });
+  });
+</script>
+
+</body>
+</html>

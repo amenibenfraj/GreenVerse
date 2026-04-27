@@ -1,0 +1,994 @@
+/* =================== RESET & GENERAL =================== */
+* {
+  margin: 0;                    /* supprime les marges par défaut du navigateur */
+  padding: 0;                   /* supprime les espacements internes par défaut */
+  box-sizing: border-box;       /* inclut padding et bordure dans largeur/hauteur */
+  font-family: 'Poppins', sans-serif; /* définit la police globale du site */
+}
+
+body {
+  overflow-x: hidden;           /* empêche le défilement horizontal */
+  scroll-behavior: smooth;      /* rend le défilement fluide */
+  color: #2e7d32;               /* couleur principale du texte (vert) */
+  background: linear-gradient(135deg,#d0f0f0,#e0ffe0); 
+  /* fond avec dégradé de couleurs douces */
+}
+
+a { 
+  text-decoration: none;        /* enlève le soulignement des liens */
+}
+
+
+/* =================== NAVBAR =================== */
+.navbar {
+  display: flex;                /* aligne les éléments de la navbar sur une ligne */
+  justify-content: space-between; /* espace le logo et les liens aux extrémités */
+  align-items: center;          /* centre verticalement les éléments */
+  padding: 15px 30px;           /* espace intérieur (haut/bas et gauche/droite) */
+  background: #4caf50;          /* couleur de fond verte de la barre de navigation */
+  position: sticky;             /* rend la navbar collante lors du scroll */
+  top: 0;                       /* reste collée en haut de la page */
+  z-index: 1000;                /* garantit que la navbar reste au-dessus du contenu */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* ajoute une ombre légère sous la navbar */
+}
+
+.navbar .logo { 
+  font-size: 1.5em;             /* agrandit la taille du texte du logo */
+  color: white;                 /* couleur blanche du logo */
+  font-weight: bold;            /* rend le logo en gras */
+}
+
+.navbar div a { 
+  margin-left: 20px;            /* espace entre chaque lien */
+  color: white;                 /* couleur blanche des liens */
+  font-weight: 500;             /* épaisseur moyenne du texte */
+  transition: 0.3s;             /* animation fluide au survol */
+}
+
+.navbar div a:hover { 
+  color: #c8e6c9;               /* change la couleur au survol */
+}
+
+/* =================== HERO =================== */
+.hero, .astuce-hero {
+  display: flex;                /* active Flexbox */
+  flex-direction: column;       /* empile les éléments verticalement */
+  justify-content: center;      /* centre verticalement le contenu */
+  align-items: center;          /* centre horizontalement le contenu */
+  text-align: center;           /* centre le texte */
+  position: relative;           /* permet le positionnement des éléments internes */
+  overflow: hidden;             /* cache les éléments qui dépassent */
+  padding-top: 70px;            /* espace en haut (évite chevauchement avec navbar) */
+}
+
+.hero {
+  height: 90vh;                 /* occupe 90% de la hauteur de l’écran */
+  background: linear-gradient(135deg,#d0f0f0,#e0ffe0); 
+                                /* fond en dégradé doux */
+}
+
+.hero h1, .astuce-hero h1 {
+  font-size: 3.5em;             /* grande taille pour le titre principal */
+  margin-bottom: 20px;          /* espace sous le titre */
+  color: #2e7d32;               /* couleur verte foncée */
+  text-shadow: 0 0 15px rgba(46,125,50,0.5); 
+                                /* effet lumineux autour du texte */
+  animation: fadeInUp 1.5s ease forwards; 
+                                /* animation d’apparition vers le haut */
+}
+
+.hero p, .astuce-hero p {
+  font-size: 1.5em;             /* taille du texte du paragraphe */
+  margin-bottom: 30px;          /* espace sous le paragraphe */
+  color: #388e3c;               /* vert plus clair */
+  animation: fadeInUp 2s ease forwards;   /* animation plus lente */
+  animation-delay: 0.5s;        /* délai avant le démarrage de l’animation */
+}
+
+.btn {
+  background: #4caf50;          /* couleur verte du bouton */
+  color: white;                 /* texte blanc */
+  padding: 15px 35px;           /* taille du bouton */
+  border-radius: 30px;          /* bouton arrondi */
+  font-weight: bold;            /* texte en gras */
+  margin: 5px;                  /* espace autour du bouton */
+  transition: 0.4s;             /* animation fluide */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);   /* ombre sous le bouton */
+}
+
+.btn:hover {
+  background: #2e7d32;          /* couleur plus foncée au survol */
+  transform: scale(1.05);       /* effet zoom léger */
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);  /* ombre plus forte au survol */
+}
+
+/* =================== PARTICULES =================== */
+.petal, .leaf, .butterfly {
+  position: absolute;           /* position libre par rapport à l’écran */
+  font-size: 25px;              /* taille des icônes (pétales, feuilles, papillons) */
+  pointer-events: none;         /* empêche l’interaction avec la souris */
+}
+
+.petal { 
+  color: #ffb6c1;               /* couleur rose pour les pétales */
+  animation: fall 6s linear infinite; 
+                                /* animation de chute en boucle */
+}
+
+.leaf { 
+  color: #81c784;               /* couleur verte pour les feuilles */
+  animation: fall 6s linear infinite; 
+                                /* même animation de chute */
+}
+
+.butterfly { 
+  color: #ffb347;               /* couleur orangée pour les papillons */
+  animation: flutter 8s linear infinite; 
+                                /* animation de vol plus lente */
+}
+
+/* Animation de chute verticale */
+@keyframes fall {
+  0% { 
+    transform: translateY(-10%) rotate(0deg); /* démarre au-dessus de l’écran */
+    opacity: 1;               /* totalement visible */
+  }
+  100% { 
+    transform: translateY(110vh) rotate(360deg); 
+                                /* tombe jusqu’en bas en tournant */
+    opacity: 0;               /* devient transparent à la fin */
+  }
+}
+
+/* Animation de vol du papillon */
+@keyframes flutter {
+  0% { 
+    transform: translateY(0) rotate(0deg);     /* position initiale */
+  }
+  50% { 
+    transform: translateY(50vh) rotate(180deg);   /* descend à mi-écran en tournant */
+  }
+  100% { 
+    transform: translateY(110vh) rotate(360deg);   /* sort de l’écran en bas */
+  }
+}
+
+/* Animation d’apparition du texte */
+@keyframes fadeInUp { 
+  from { 
+    opacity: 0;                /* invisible au début */
+    transform: translateY(20px); /* légèrement en bas */
+  } 
+  to { 
+    opacity: 1;                /* totalement visible */
+    transform: translateY(0);  /* position normale */
+  } 
+}
+
+
+/* =================== SECTIONS =================== */
+/* Sélection de toutes les sections */
+section {
+  padding: 60px 20px;           /* espace intérieur : 60px haut/bas, 20px gauche/droite */
+  opacity: 0;                   /* sections invisibles au départ */
+  animation: fadeIn 1.5s forwards; /* applique l’animation fadeIn sur 1,5s et conserve l’état final */
+}
+
+/* Animation différée pour la première section */
+section:nth-of-type(1){ 
+  animation-delay: 0.3s;        /* commence 0,3s après le chargement */
+}
+
+/* Animation différée pour la deuxième section */
+section:nth-of-type(2){ 
+  animation-delay: 0.6s;        /* commence 0,6s après le chargement */
+}
+
+/* Animation différée pour la troisième section */
+section:nth-of-type(3){ 
+  animation-delay: 0.9s;        /* commence 0,9s après le chargement */
+}
+
+/* Animation différée pour la quatrième section */
+section:nth-of-type(4){ 
+  animation-delay: 1.2s;        /* commence 1,2s après le chargement */
+}
+
+/* Définition de l’animation fadeIn */
+@keyframes fadeIn { 
+  from { 
+    opacity: 0;                  /* commence invisible */
+    transform: translateY(20px); /* commence légèrement en dessous */
+  } 
+  to { 
+    opacity: 1;                  /* fini totalement visible */
+    transform: translateY(0);    /* remonte à sa position normale */
+  } 
+}
+
+/* Style des titres h2 à l’intérieur des sections */
+section h2 {
+  text-align: center;            /* centré horizontalement */
+  margin-bottom: 40px;           /* espace sous le titre */
+  color: #2e7d32;                /* couleur verte */
+  font-family: 'Poppins', sans-serif; /* police Poppins */
+  font-size: 2em;                /* taille du texte */
+  transition: 0.5s;              /* transition douce pour changements futurs */
+}
+
+
+/* =================== SERVICES / PLANTS =================== */
+/* =================== SERVICES ET PLANTS =================== */
+
+/* Conteneur des sections services et plants */
+.services, .plants-section {
+  display: flex;                 /* utilise Flexbox pour organiser les cartes */
+  flex-wrap: wrap;               /* permet aux cartes de passer à la ligne si besoin */
+  justify-content: center;       /* centre les cartes horizontalement */
+  gap: 30px;                     /* espace entre chaque carte */
+}
+
+/* Style général des cartes service et catégorie */
+.service-card, .category-card {
+  background: #f0fff0;           /* couleur de fond vert clair */
+  border-radius: 20px;           /* coins arrondis */
+  width: 280px;                  /* largeur fixe des cartes */
+  padding: 25px;                 /* espace intérieur */
+  text-align: center;            /* texte centré */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* ombre légère pour effet 3D */
+  transition: transform 0.4s, box-shadow 0.4s; /* transition pour animations au survol */
+}
+
+/* Effet au survol pour les cartes service */
+.service-card:hover {
+  transform: rotateX(5deg) scale(1.05); /* légère rotation 3D + agrandissement */
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2); /* ombre plus prononcée */
+}
+
+/* Style spécifique des cartes catégorie */
+.category-card {
+  width: 300px;                  /* largeur légèrement supérieure */
+  overflow: hidden;              /* masque ce qui dépasse */
+  position: relative;            /* pour positionner des éléments à l'intérieur */
+}
+
+/* Effet au survol pour les cartes catégorie */
+.category-card:hover {
+  transform: rotate(-2deg) scale(1.05);  /* rotation légère + agrandissement */
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3); /* ombre plus forte */
+  background: #e0ffe0;                   /* fond légèrement vert */
+}
+
+/* Style des images à l'intérieur des cartes catégorie */
+.category-card img {
+  width: 100%;                     /* image occupe toute la largeur de la carte */
+  border-radius: 15px;             /* coins arrondis */
+  margin-bottom: 15px;             /* espace sous l'image */
+  transition: transform 0.5s;      /* transition douce pour l'animation */
+}
+
+/* Effet au survol sur l'image dans la carte catégorie */
+.category-card:hover img { 
+  transform: scale(1.05) rotate(2deg); /* zoom léger + rotation */
+}
+
+/* Style des titres dans les cartes catégorie */
+.category-card h3 { 
+  color: #1b5e20;                  /* couleur vert foncé */
+  margin-bottom: 10px;             /* espace sous le titre */
+  font-family: 'Poppins', sans-serif; /* police Poppins */
+}
+
+/* Style du texte descriptif dans les cartes catégorie */
+.category-card p { 
+  font-size: 0.95em;               /* taille légèrement plus petite */
+  color: #2f4f2f;                  /* couleur vert foncé */
+}
+
+/* =================== STATISTIQUES =================== */
+
+/* Conteneur des statistiques */
+.stats {
+  display: flex;
+  flex-wrap: wrap;                  /* les cartes passent à la ligne si nécessaire */
+  justify-content: center;          /* centrer horizontalement */
+  gap: 40px;                        /* espace entre cartes */
+}
+
+/* Style des cartes statistiques */
+.stat-card {
+  background: #f0fff0;             /* fond vert clair */
+  border-radius: 20px;             /* coins arrondis */
+  padding: 30px;                   /* espace intérieur */
+  width: 220px;                     /* largeur fixe */
+  text-align: center;               /* texte centré */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* ombre légère */
+}
+
+/* Style des titres dans les cartes statistiques */
+.stat-card h3 {
+  font-size: 2em;                  /* taille du texte */
+  margin-bottom: 10px;             /* espace sous le titre */
+  color: #4caf50;                  /* vert vif */
+}
+
+/* Barre de fond des statistiques */
+.stat-card .bar {
+  background: #c8e6c9;             /* couleur verte claire */
+  border-radius: 20px;             /* coins arrondis */
+  height: 20px;                    /* hauteur de la barre */
+  margin-top: 10px;                /* espace au-dessus */
+  overflow: hidden;                /* masque ce qui dépasse */
+}
+
+/* Barre de progression animée */
+.stat-card .fill {
+  height: 100%;                     /* prend toute la hauteur */
+  width: 0;                          /* commence à 0 et s'anime */
+  background: #4caf50;              /* couleur verte */
+  border-radius: 20px;              /* coins arrondis */
+  animation: fillBar 2s forwards;   /* animation sur 2s pour remplir la barre */
+}
+
+/* Animation pour la barre de progression */
+@keyframes fillBar {
+  from { width: 0; }                /* commence vide */
+  to { width: var(--percent); }     /* fini à la valeur définie par la variable CSS --percent */
+}
+
+/* =================== MAP =================== */
+
+/* Conteneur de la carte/map */
+.map-container {
+  max-width: 900px;                /* largeur maximale */
+  margin: auto;                     /* centré horizontalement */
+  border-radius: 20px;              /* coins arrondis */
+  overflow: hidden;                 /* masque ce qui dépasse */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* ombre légère */
+}
+
+/* Carte intégrée (iframe) */
+.map-container iframe { 
+  width: 100%;                       /* occupe toute la largeur du conteneur */
+  height: 400px;                      /* hauteur fixe */
+  border: 0;                          /* pas de bordure */
+}
+
+/* =================== AVIS VISITEURS =================== */
+
+/* Conteneur des avis */
+.review-section {
+  display: flex;
+  flex-wrap: wrap;                  /* les cartes passent à la ligne si besoin */
+  justify-content: center;          /* centré horizontalement */
+  gap: 30px;                        /* espace entre cartes */
+}
+
+/* Carte d’un avis */
+.review-card {
+  background: #f0fff0;              /* fond vert clair */
+  border-radius: 20px;              /* coins arrondis */
+  width: 280px;                     /* largeur fixe */
+  padding: 25px;                    /* espace intérieur */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* ombre légère */
+  font-style: italic;               /* texte en italique */
+  position: relative;               /* pour pseudo-éléments */
+  transition: transform 0.3s, box-shadow 0.3s; /* animation douce au survol */
+}
+
+/* Effet au survol des avis */
+.review-card:hover {
+  transform: scale(1.03);           /* léger zoom */
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2); /* ombre plus prononcée */
+}
+
+/* Guillemet ouvrant sur l’avis */
+.review-card::before {
+  content: "“";                     /* symbole guillemet */
+  font-size: 3em;                   /* taille du symbole */
+  position: absolute;               /* positionné par rapport à la carte */
+  top: 10px;                        /* distance du haut */
+  left: 15px;                       /* distance de la gauche */
+  color: #4caf50;                   /* couleur verte */
+}
+
+/* Guillemet fermant sur l’avis */
+.review-card::after {
+  content: "”";                     /* symbole guillemet */
+  font-size: 3em;
+  position: absolute;
+  bottom: 10px;                     /* distance du bas */
+  right: 15px;                      /* distance de la droite */
+  color: #4caf50;
+}
+
+
+/* =================== TABLEAUX =================== */
+
+/* Style général du tableau */
+table {
+  width: 90%;                       /* largeur du tableau à 90% du conteneur parent */
+  margin: 20px auto;                /* centré horizontalement avec marge verticale de 20px */
+  border-collapse: collapse;        /* fusionne les bordures pour un rendu uniforme */
+  background: #f0fff0;              /* fond vert très clair */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* légère ombre autour du tableau pour effet 3D */
+  border-radius: 15px;              /* coins arrondis */
+  overflow: hidden;                 /* masque ce qui dépasse du tableau */
+}
+
+/* Style des cellules th (titre) et td (contenu) */
+table th, table td {
+  border: 1px solid #4CAF50;       /* bordure verte */
+  padding: 12px 15px;               /* espace à l'intérieur des cellules */
+  text-align: center;               /* texte centré */
+  transition: 0.3s;                 /* animation douce pour effets au survol */
+}
+
+/* Style spécifique pour les entêtes de colonnes */
+table th { 
+  background: #4CAF50;              /* fond vert vif */
+  color: white;                      /* texte blanc */
+  font-size: 1em;                    /* taille du texte */
+}
+
+/* Style des lignes paires pour effet zébré */
+table tr:nth-child(even) { 
+  background: #e8f5e9;             /* fond vert clair pour les lignes paires */
+}
+
+/* Effet au survol d'une ligne */
+table tr:hover { 
+  background: #c8e6c9;             /* change la couleur de fond au survol */
+  transform: scale(1.01);           /* léger zoom pour attirer l'attention */
+}
+
+/* Style spécifique pour les cellules td */
+table td { 
+  color: #2e7d32;                  /* texte vert foncé */
+  font-weight: 500;                 /* texte semi-gras */
+}
+
+/* =================== FORMULAIRE =================== */
+/* =================== SECTION CONTACT =================== */
+
+/* Style global de la section contact */
+.contact-section {
+  padding: 70px 30px; /* espace intérieur en haut/bas et gauche/droite */
+  max-width: 750px;   /* largeur maximale pour ne pas dépasser */
+  margin: auto;       /* centré horizontalement */
+  background: linear-gradient(145deg, #f0fff0, #e0ffe0); /* dégradé vert clair */
+  border-radius: 25px; /* coins arrondis */
+  border: 1px solid rgba(46,139,87,0.2); /* bordure verte claire transparente */
+  box-shadow: 0 12px 25px rgba(0,0,0,0.1); /* ombre portée pour effet profondeur */
+}
+
+/* Titre de la section */
+.contact-section h1 {
+  text-align: center;                     /* centré horizontalement */
+  color: #2e8b57;                         /* couleur verte */
+  font-size: 3em;                         /* grande taille de texte */
+  font-weight: 700;                        /* texte en gras */
+  margin-bottom: 15px;                     /* marge sous le titre */
+  letter-spacing: 1px;                     /* espacement des lettres */
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* légère ombre pour relief */
+}
+
+/* Texte introductif de la section */
+.contact-section .intro {
+  text-align: center;         /* centré horizontalement */
+  color: #3a6f40;             /* vert foncé */
+  font-size: 1.3em;           /* taille un peu plus grande que normal */
+  margin-bottom: 40px;        /* espace sous le texte */
+  line-height: 1.6;           /* hauteur de ligne pour lisibilité */
+  font-style: italic;          /* texte en italique */
+}
+
+/* Formulaire */
+form {
+  display: flex;              /* utilise flexbox */
+  flex-direction: column;     /* les champs s'empilent verticalement */
+  gap: 25px;                  /* espace entre les champs */
+}
+
+/* Styles des champs input, select et textarea */
+input, select, textarea {
+  flex: 1;                    /* prend toute la largeur disponible */
+  min-width: 150px;           /* largeur minimale */
+  padding: 14px 18px;         /* espace à l’intérieur du champ */
+  border-radius: 15px;        /* coins arrondis */
+  border: 1px solid #ccc;     /* bordure grise claire */
+  font-size: 1em;             /* taille de texte normale */
+  outline: none;              /* supprime le contour par défaut au focus */
+  background: #ffffff;        /* fond blanc */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05); /* légère ombre interne */
+  transition: all 0.3s ease;  /* transition douce pour hover/focus */
+}
+
+/* Style des placeholders */
+::placeholder { 
+  color: #7aa77a; /* couleur verte clair */
+  opacity: 0.8;   /* légèrement transparent */
+}
+
+/* Effet au focus sur les champs */
+input:focus, select:focus, textarea:focus {
+  border-color: #2e8b57;             /* bordure verte foncée */
+  box-shadow: 0 4px 12px rgba(46,139,87,0.25); /* ombre plus prononcée */
+  transform: translateY(-2px);       /* léger décalage vers le haut pour effet dynamique */
+}
+
+/* Boutons du formulaire */
+button, .btn {
+  display: block;                     /* block pour centrer */
+  margin: 0 auto;                     /* centré horizontalement */
+  background: #2e8b57;                /* vert foncé */
+  color: white;                        /* texte blanc */
+  padding: 14px 36px;                  /* espace intérieur */
+  border-radius: 30px;                 /* coins arrondis */
+  font-weight: 500;                     /* semi-gras */
+  border: none;                        /* pas de bordure */
+  cursor: pointer;                     /* curseur main */
+  font-size: 1.05em;                   /* texte légèrement plus grand */
+  transition: all 0.3s ease;          /* animation douce pour hover */
+  box-shadow: 0 6px 18px rgba(46,139,87,0.25); /* ombre pour relief */
+}
+
+/* Effet au survol du bouton */
+button:hover, .btn:hover {
+  background: #1f6f43;                 /* vert encore plus foncé */
+  transform: scale(1.05) translateY(-1px); /* zoom léger et levé */
+  box-shadow: 0 10px 25px rgba(46,139,87,0.4); /* ombre plus prononcée */
+}
+
+/* Style spécifique aux textarea */
+textarea { 
+  min-height:140px;   /* hauteur minimum */
+  resize: vertical;   /* l'utilisateur peut seulement redimensionner verticalement */
+}
+
+
+/* =================== TIMELINE ASTUCES =================== */
+ 
+/* Conteneur principal de la timeline */
+.astuce-timeline {
+  display: flex;               /* utilisation de flexbox */
+  flex-direction: column;      /* les items sont empilés verticalement */
+  gap: 30px;                   /* espace entre chaque astuce */
+  padding: 50px 20px;          /* marge intérieure autour de la timeline */
+  position: relative;          /* nécessaire pour le trait central pseudo-élément */
+}
+
+/* Ligne verticale centrale de la timeline */
+.astuce-timeline::before {
+  content: '';                 /* pseudo-élément vide pour créer la ligne */
+  position: absolute;          /* positionné par rapport au conteneur */
+  left: 50%;                   /* centré horizontalement */
+  width: 4px;                  /* épaisseur de la ligne */
+  height: 100%;                /* s’étend sur toute la hauteur du conteneur */
+  background: #a4e8a4;         /* couleur verte claire */
+  transform: translateX(-50%); /* ajustement exact pour centrer */
+  border-radius: 2px;          /* coins légèrement arrondis */
+}
+
+/* Chaque item de la timeline */
+.astuce-item {
+  display: flex;               /* flex pour aligner l'icône et le texte */
+  align-items: center;         /* centré verticalement */
+  position: relative;          /* pour positionner éventuellement des éléments internes */
+  width: 50%;                  /* occupe la moitié de la largeur de la timeline */
+  padding: 20px;               /* espace intérieur */
+  border-radius: 20px;         /* coins arrondis */
+  text-align: left;            /* texte aligné à gauche */
+  background: #fff;            /* fond blanc */
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1); /* légère ombre pour relief */
+  transition: transform 0.3s, background 0.3s; /* animation douce au hover */
+}
+
+/* Items impairs (1er, 3e…) alignés à gauche et fond coloré */
+.astuce-item:nth-child(odd) { 
+  align-self: flex-start;      
+  background: #fff0f5;         /* rose très clair */
+}
+
+/* Items pairs (2e, 4e…) alignés à droite et fond coloré */
+.astuce-item:nth-child(even) { 
+  align-self: flex-end;        
+  background: #f0f8ff;         /* bleu très clair */
+}
+
+/* Effet au survol d’un item */
+.astuce-item:hover { 
+  transform: scale(1.05);      /* léger zoom */
+  background: #d4f5c4;         /* fond vert clair pour survol */
+}
+
+/* Style des icônes des items */
+.icon {
+  font-size: 2em;               /* taille de l’icône */
+  margin-right: 15px;           /* espace entre icône et texte */
+  flex-shrink: 0;               /* ne se rétrécit pas si l’espace est réduit */
+  animation: bounce 2s infinite alternate; /* animation de rebond */
+}
+
+/* Animation rebond pour les icônes */
+@keyframes bounce { 
+  0% { transform: translateY(0); } 
+  100% { transform: translateY(-5px); } /* monte légèrement et revient */
+}
+
+/* Titre de chaque astuce */
+.content h2 { 
+  margin-bottom: 8px; 
+  color: #2e7d32; 
+  font-family:'Poppins',sans-serif; 
+}
+
+/* Texte descriptif de chaque astuce */
+.content p { 
+  margin-bottom: 10px; 
+  color: #4CAF50; 
+  line-height: 1.5; /* espace entre lignes pour lisibilité */
+}
+
+
+/* =================== FOOTER =================== */
+footer {
+  background:#2e7d32;
+  color:white;
+  text-align:center;
+  padding:30px 20px;
+   margin-top: 50px; 
+}
+
+ 
+/* =================== HERO ABOUT =================== */
+ 
+/* Conteneur de la section "À propos" */
+.hero-about {
+  height: 70vh; /* Hauteur de 70% de la hauteur de la fenêtre */
+  background: linear-gradient(135deg, #e0f7fa, #dcedc8); /* Dégradé pastel de fond */
+  display: flex; /* Utilise Flexbox pour aligner les enfants */
+  flex-direction: column; /* Les éléments sont empilés verticalement */
+  justify-content: center; /* Centre verticalement les éléments */
+  align-items: center; /* Centre horizontalement les éléments */
+  text-align: center; /* Centre le texte à l'intérieur */
+  padding-top: 70px; /* Décalage depuis le haut (pour navbar) */
+  position: relative; /* Positionnement relatif pour éléments internes absolus */
+  overflow: hidden; /* Cache tout ce qui dépasse du conteneur */
+}
+
+/* Titre principal dans hero-about */
+.hero-about h1 {
+  font-size: 3.5em; /* Taille du texte très grande */
+  color: #2e7d32; /* Couleur verte foncée */
+  margin-bottom: 15px; /* Espace sous le titre */
+  font-family: 'Poppins', sans-serif; /* Police Poppins */
+  animation: fadeInDown 1s ease-out; /* Animation d'apparition du haut vers le centre */
+}
+
+/* Texte descriptif dans hero-about */
+.hero-about p {
+  font-size: 1.3em; /* Taille de texte légèrement plus grande que normal */
+  color: #388e3c; /* Vert moyen pour le texte */
+  max-width: 800px; /* Limite la largeur pour une meilleure lisibilité */
+  margin: 0 auto; /* Centre horizontalement le texte */
+  animation: fadeInUp 1.2s ease-out; /* Animation d'apparition du bas vers le centre */
+}
+
+/* =================== FADE ANIMATIONS =================== */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =================== ABOUT SECTIONS =================== */
+.about-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.about-section h2 {
+  font-size: 2.5em;
+  color: #2e7d32;
+  margin-bottom: 25px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.about-section p {
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+  color: #4caf50;
+  font-size: 1.15em;
+  line-height: 1.7;
+}
+
+/* =================== MISSION & VALUES CARDS =================== */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.card {
+  background: #f0fff0;
+  padding: 25px;
+  border-radius: 20px;
+  width: 280px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.card h3 {
+  font-size: 1.5em;
+  color: #1b5e20;
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-size: 1em;
+  color: #2e7d32;
+  line-height: 1.5;
+}
+
+/* =================== ICONS IN CARDS =================== */
+.card i {
+  font-size: 2.5em;
+  color: #4caf50;
+  margin-bottom: 15px;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.card:hover i {
+  transform: scale(1.2) rotate(10deg);
+  color: #2e7d32;
+}
+
+  
+
+
+
+.categories-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  padding: 30px;
+  background: #f4fff6;
+}
+
+.cat-card {
+  text-align: center;
+  padding: 20px;
+  background: white;
+  border-radius: 15px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #2e7d32;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s, background 0.3s;
+}
+
+.cat-card:hover {
+  transform: translateY(-5px);
+  background: #2e7d32;
+  color: white;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f7fff8;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2e7d32;
+  padding: 15px 30px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 8px;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+ 
+/* CATEGORIES */
+.categories-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  padding: 50px;
+}
+
+.cat-card {
+  background: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 15px;
+  font-weight: bold;
+  color: #2e7d32;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform .3s;
+}
+
+.cat-card:hover {
+  transform: translateY(-5px);
+}
+
+/* PLANTS */
+.plants-block {
+  padding: 60px 40px;
+}
+
+.plants-block h2 {
+  color: #2e7d32;
+  margin-bottom: 30px;
+}
+
+.plants-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.category-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.category-card h3 {
+  margin: 10px 0;
+}
+
+/* FOOTER */
+footer {
+  background: #2e7d32;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ANIMATION */
+/* Animation apparition au scroll */
+.reveal {
+  opacity: 0;               /* invisible au départ */
+  transform: translateY(50px); /* décalé vers le bas */
+  transition: all 0.8s ease;  /* transition fluide */
+}
+
+/* Quand actif */
+.reveal.active {
+  opacity: 1;               /* visible */
+  transform: translateY(0); /* position normale */
+}
+
+
+
+
+
+
+
+/*  categorie*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f8f4;
+  color: #2e7d32;
+}
+
+/* NAVBAR categorie*/
+.navbar {
+  background: #2e7d32;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* CATEGORIES */
+.categories-cards {
+  display: flex;
+  gap: 15px;
+  padding: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cat-card {
+  background: #e8f5e9;
+  padding: 12px 18px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+/* SECTIONS */
+section {
+  padding: 30px;
+}
+
+.plants-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+/* PLANT CARD */
+.plant-card {
+  background: white;
+  padding: 15px;
+  border-radius: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #2e7d32;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.plant-card:hover {
+  transform: translateY(-6px);
+}
+
+.plant-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+

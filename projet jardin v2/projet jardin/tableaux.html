@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Infos Plantes - GreenVerse</title>
+<link rel="stylesheet" href="style.css">
+<style>
+
+/* Catégories */
+.categories-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.cat-card {
+  padding: 10px 15px;
+  background: #e3f2e1;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #000000;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.cat-card:hover {
+  background: #d0e6c8;
+}
+
+/* Tableaux  */
+.table-grid {
+  display: grid;
+  grid-template-rows: auto;
+  margin: 20px auto;
+  max-width: 1000px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.table-header, .table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 3fr;
+  padding: 12px 15px;
+  align-items: center;
+}
+
+.table-header {
+  background: #8fbc8f;
+  color: #fff;
+  font-weight: bold;
+}
+
+.table-row {
+  background: #fdfdfb;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background 0.2s;
+}
+
+.table-row:nth-child(even) {
+  background: #f5f5f2;
+}
+
+.table-row:hover {
+  background: #e6f2e6;
+}
+
+.plant-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+h2 {
+  text-align: center;
+  color: #556b2f;
+  margin-top: 40px;
+}
+
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="logo"><span>🌱</span>GreenVerse</a>
+  <div>
+    <a href="index.html">Accueil</a>
+    <a href="jardin.html">Jardin</a>
+    <a href="tableaux.html" class="active">Infos Plantes</a>
+    <a href="ateliers.html">Ateliers</a>
+    <a href="shop.html">Boutique</a>
+    <a href="blog.html">Blog</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="faq.html">FAQ</a>
+    <a href="astuce.html">Astuce du jour</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">À propos</a>
+  </div>
+</nav>
+
+<!-- Catégories -->
+<section class="categories-cards">
+  <a href="#fleurs" class="cat-card">🌸 Fleurs</a>
+  <a href="#potager" class="cat-card">🥕 Potager</a>
+  <a href="#aromatiques" class="cat-card">🌿 Aromatiques</a>
+  <a href="#arbustes" class="cat-card">🌺 Arbustes</a>
+  <a href="#arbres" class="cat-card">🌳 Arbres</a>
+  <a href="#aquatiques" class="cat-card">🌊 Aquatiques</a>
+  <a href="#grimpantes" class="cat-card">🍃 Grimpantes</a>
+</section>
+
+<!-- Fleurs -->
+<section id="fleurs">
+<h2>Fleurs</h2>
+<div class="table-grid">
+  <div class="table-header">
+    <div>Plante</div>
+    <div>Lumière</div>
+    <div>Arrosage</div>
+    <div>Difficulté</div>
+    <div>Détails</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images\rose fleur.webp" alt="Rose"> 🌹 Rose</div>
+    <div>☀️ Plein soleil</div>
+    <div>💧 Modéré</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 50-100 cm, Floraison: Mai-Juin, Sol bien drainé</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images\tulipe fleur.jpg" alt="Tulipe"> 🌷 Tulipe</div>
+    <div>🌤 Mi-ombre</div>
+    <div>💧 Régulier</div>
+    <div>✅ Facile</div>
+    <div>Taille: 30-40 cm, Floraison: Avril-Mai, Sol fertile et humide</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images\marguerite fleur.webp" alt="Marguerite"> 🌼 Marguerite</div>
+    <div>☀️ Plein soleil</div>
+    <div>💧 Modéré</div>
+    <div>✅ Facile</div>
+    <div>Taille: 20-50 cm, Floraison: Mai-Juillet, Sol bien drainé</div>
+  </div>
+</div>
+</section>
+
+<!-- Plantes potagères -->
+<section id="potager">
+<h2>Plantes potagères</h2>
+<div class="table-grid">
+  <div class="table-header">
+    <div>Plante</div>
+    <div>Lumière</div>
+    <div>Arrosage</div>
+    <div>Difficulté</div>
+    <div>Détails</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/tomate.jpg" alt="Tomate"> 🍅 Tomate</div>
+    <div>☀️ Plein soleil</div>
+    <div>💧 Élevé</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 50-200 cm, Floraison: Juin-Août, Sol riche et drainé</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/carrotes.webp" alt="Carotte"> 🥕 Carotte</div>
+    <div>🌤 Mi-ombre</div>
+    <div>💧 Modéré</div>
+    <div>✅ Facile</div>
+    <div>Taille: 15-30 cm, Floraison: N/A, Sol meuble et profond</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/laitue.jpg" alt="Laitue"> 🥬 Laitue</div>
+    <div>🌤 Mi-ombre</div>
+    <div>💧 Régulier</div>
+    <div>✅ Facile</div>
+    <div>Taille: 20-30 cm, Floraison: N/A, Sol fertile et humide</div>
+  </div>
+</div>
+</section>
+
+<!-- Plantes aromatiques -->
+<section id="aromatiques">
+<h2>Plantes aromatiques</h2>
+<div class="table-grid">
+  <div class="table-header">
+    <div>Plante</div>
+    <div>Lumière</div>
+    <div>Arrosage</div>
+    <div>Difficulté</div>
+    <div>Détails</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/basilic.webp" alt="Basilic"> 🌿 Basilic</div>
+    <div>🌤 Mi-ombre</div>
+    <div>💧 Modéré</div>
+    <div>✅ Facile</div>
+    <div>Taille: 30-60 cm, Floraison: Juin-Sept, Sol bien drainé</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/menthe.jpg" alt="Menthe"> 🌱 Menthe</div>
+    <div>🌤 Mi-ombre</div>
+    <div>💧 Modéré</div>
+    <div>✅ Facile</div>
+    <div>Taille: 30-80 cm, Floraison: Juin-Juillet, Sol frais et drainé</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/thym.webp" alt="Thym"> 🍃 Thym</div>
+    <div>☀️ Plein soleil</div>
+    <div>💧 Faible</div>
+    <div>✅ Facile</div>
+    <div>Taille: 15-30 cm, Floraison: Mai-Juillet, Sol pauvre et bien drainé</div>
+  </div>
+</div>
+</section>
+
+<!-- Arbustes -->
+<section id="arbustes">
+<h2>Arbustes</h2>
+<div class="table-grid">
+  <div class="table-header">
+    <div>Plante</div>
+    <div>Lumière</div>
+    <div>Arrosage</div>
+    <div>Difficulté</div>
+    <div>Détails</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/hortensia.jpg" alt="Hortensia"> 🌸 Hortensia</div>
+    <div>🌤 Mi-ombre</div>
+    <div>💧 Modéré</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 50-150 cm, Floraison: Juin-Août, Sol humide</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/bougainvillier.jpg" alt="Bougainvillier"> 🌺 Bougainvillier</div>
+    <div>☀️ Plein soleil</div>
+    <div>💧 Modéré</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 200-300 cm, Floraison: Juin-Sept, Sol léger et drainé</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/camelia.jpg" alt="Camélia"> 🌷 Camélia</div>
+    <div>🌤 Mi-ombre</div>
+    <div>💧 Régulier</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 50-150 cm, Floraison: Décembre-Mars, Sol acide et drainé</div>
+  </div>
+</div>
+</section>
+
+<!-- Arbres -->
+<section id="arbres">
+<h2>Arbres</h2>
+<div class="table-grid">
+  <div class="table-header">
+    <div>Plante</div>
+    <div>Lumière</div>
+    <div>Arrosage</div>
+    <div>Difficulté</div>
+    <div>Détails</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/pommier.avif" alt="Pommier"> 🍏 Pommier</div>
+    <div>☀️ Plein soleil</div>
+    <div>💧 Modéré</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 200-400 cm, Floraison: Avril-Mai, Sol fertile et drainé</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/cerisier.jpg" alt="Cerisier"> 🍒 Cerisier</div>
+    <div>☀️ Plein soleil</div>
+    <div>💧 Modéré</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 300-500 cm, Floraison: Avril-Mai, Sol riche et bien drainé</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/erable.jpg" alt="Érable"> 🍁 Érable</div>
+    <div>🌤 Mi-ombre</div>
+    <div>💧 Modéré</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 400-600 cm, Floraison: Avril, Sol meuble et drainé</div>
+  </div>
+</div>
+</section>
+
+<!-- Plantes aquatiques -->
+<section id="aquatiques">
+<h2>Plantes aquatiques</h2>
+<div class="table-grid">
+  <div class="table-header">
+    <div>Plante</div>
+    <div>Lumière</div>
+    <div>Arrosage</div>
+    <div>Difficulté</div>
+    <div>Détails</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/nenuphar.webp" alt="Nénuphar"> 🌊 Nénuphar</div>
+    <div>☀️ Plein soleil</div>
+    <div>💧 Élevé</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 20-60 cm, Floraison: Juin-Juillet, Eau calme</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/lotus.avif" alt="Lotus"> 🌸 Lotus</div>
+    <div>☀️ Plein soleil</div>
+    <div>💧 Élevé</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 50-150 cm, Floraison: Juin-Août, Eau profonde et claire</div>
+  </div>
+  
+</div>
+</section>
+
+<!-- Plantes grimpantes -->
+<section id="grimpantes">
+<h2>Plantes grimpantes</h2>
+<div class="table-grid">
+  <div class="table-header">
+    <div>Plante</div>
+    <div>Lumière</div>
+    <div>Arrosage</div>
+    <div>Difficulté</div>
+    <div>Détails</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/lierre.jpg" alt="Lierre"> 🌿 Lierre</div>
+    <div>🌤 Mi-ombre</div>
+    <div>💧 Faible</div>
+    <div>✅ Facile</div>
+    <div>Taille: 100-300 cm, Floraison: N/A, Sol bien drainé</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/glycine.jpg" alt="Glycine"> 🌸 Glycine</div>
+    <div>☀️ Plein soleil</div>
+    <div>💧 Modéré</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 200-400 cm, Floraison: Mai-Juin, Sol fertile et léger</div>
+  </div>
+  <div class="table-row">
+    <div><img class="plant-img" src="images/vigne.jpg" alt="Vigne"> 🍇 Vigne</div>
+    <div>☀️ Plein soleil</div>
+    <div>💧 Modéré</div>
+    <div>⚡ Moyenne</div>
+    <div>Taille: 300-500 cm, Floraison: Mai-Juin, Sol fertile et drainé</div>
+  </div>
+</div>
+</section>
+
+<footer>© 2025 GreenVerse</footer>
+</body>
+</html>

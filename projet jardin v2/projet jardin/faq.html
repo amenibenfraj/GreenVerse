@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ - GreenVerse</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* =================== FAQ =================== */
+.faq-hero {
+  height: 50vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  background: linear-gradient(120deg, #f0fff0, #ffe6f0);
+  padding-top:70px;
+}
+
+.faq-hero h1 {
+  font-size:3em;
+  color:#2e7d32;
+  margin-bottom:20px;
+  font-family:'Poppins',sans-serif;
+}
+
+.faq-hero p {
+  font-size:1.3em;
+  color:#1b5e20;
+}
+
+ .faq-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+.faq-item {
+  background: #fffaf0;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.faq-item input {
+  display: none;
+}
+
+.faq-item label {
+  display: block;
+  padding: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #2e7d32;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.faq-item label:hover {
+  background: #f0ffe0;
+}
+
+.faq-item label::after {
+  content: '+';
+  position: absolute;
+  right: 20px;
+  font-size: 1.5em;
+  transition: transform 0.3s;
+}
+
+.faq-item input:checked + label::after {
+  content: '-';
+}
+
+.faq-item .answer {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  background: #e6ffe6;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.faq-item input:checked ~ .answer {
+  max-height: 300px;
+  padding: 15px 20px;
+}
+
+ 
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="logo"><span>🌱</span>GreenVerse</a>
+  <div>
+    <a href="index.html">Accueil</a>
+    <a href="jardin.html">Jardin</a>
+    <a href="tableaux.html">Infos Plantes</a>
+    <a href="ateliers.html">Ateliers</a>
+    <a href="shop.html">Boutique</a>
+    <a href="blog.html">Blog</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="faq.html">FAQ</a>
+    <a href="astuce.html">Astuce du jour</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html" class="active">À propos</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="faq-hero">
+  <h1>FAQ GreenVerse</h1>
+  <p>Questions fréquentes sur le jardinage et nos ateliers 🌿</p>
+</section>
+
+<!-- FAQ -->
+<section class="faq-container">
+
+  <!-- Question 1 -->
+  <div class="faq-item">
+    <input type="checkbox" id="q1">
+    <label for="q1">Comment arroser mes plantes correctement ?</label>
+    <div class="answer">
+      <p>Il est recommandé d'arroser le matin ou en fin de journée pour éviter l'évaporation. La quantité dépend de la plante et du type de sol.</p>
+    </div>
+  </div>
+
+  <!-- Question 2 -->
+  <div class="faq-item">
+    <input type="checkbox" id="q2">
+    <label for="q2">Quelle exposition pour mes tomates ?</label>
+    <div class="answer">
+      <p>Les tomates ont besoin de plein soleil : au moins 6 à 8 heures par jour.</p>
+    </div>
+  </div>
+
+  <!-- Question 3 -->
+  <div class="faq-item">
+    <input type="checkbox" id="q3">
+    <label for="q3">Comment lutter contre les pucerons ?</label>
+    <div class="answer">
+      <p>Vous pouvez utiliser des insectes auxiliaires comme les coccinelles ou pulvériser une solution naturelle à base de savon noir.</p>
+    </div>
+  </div>
+
+  <!-- Question 4 -->
+  <div class="faq-item">
+    <input type="checkbox" id="q4">
+    <label for="q4">Puis-je cultiver des plantes aromatiques en intérieur ?</label>
+    <div class="answer">
+      <p>Oui, placez-les près d'une fenêtre bien exposée à la lumière et utilisez un pot avec un bon drainage.</p>
+    </div>
+  </div>
+
+  <!-- Question 5 -->
+  <div class="faq-item">
+    <input type="checkbox" id="q5">
+    <label for="q5">Quels outils sont essentiels pour débuter ?</label>
+    <div class="answer">
+      <p>Un arrosoir, une petite pelle, un râteau, des gants et éventuellement un sécateur suffisent pour commencer.</p>
+    </div>
+  </div>
+
+</section>
+
+<footer>© 2025 GreenVerse</footer>
+</body>
+</html>
