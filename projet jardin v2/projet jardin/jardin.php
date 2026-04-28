@@ -1,3 +1,7 @@
+<?php
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -213,22 +217,7 @@
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar">
-  <a href="index.html" class="logo"><span>🌱</span>GreenVerse</a>
-  <div>
-    <a href="index.html">Accueil</a>
-    <a href="jardin.html">Jardin</a>
-    <a href="tableaux.html">Infos Plantes</a>
-    <a href="ateliers.html">Ateliers</a>
-    <a href="shop.html">Boutique</a>
-    <a href="blog.html">Blog</a>
-    <a href="quiz.html">Quiz</a>
-    <a href="faq.html">FAQ</a>
-    <a href="astuce.html">Astuce du jour</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html" class="active">À propos</a>
-  </div>
-</nav>
+<?php include 'navbar.php'; ?>
 
 <!-- CATEGORIES -->
 <section class="categories-cards">

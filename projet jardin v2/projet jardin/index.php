@@ -1,11 +1,32 @@
+<?php
+session_start();
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+
+// Si NON connecté → login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: auth.php");
+    exit;
+}
+
+// Si admin → dashboard
+if ($_SESSION['user_role'] === 'admin') {
+    header("Location: admindash.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>GreenVerse - Accueil</title>
 <style>
-/* =================== GENERAL =================== */
 body {
   margin:0;
   font-family:'Poppins',sans-serif;
@@ -14,23 +35,6 @@ body {
 }
 a {text-decoration:none;}
 
-/* =================== NAVBAR =================== */
-.navbar {
-  display:flex;
-  justify-content: space-between;
-  align-items: center;
-  padding:15px 30px;
-  background: #4caf50;
-  position: sticky;
-  top:0;
-  z-index:1000;
-  box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
-.navbar .logo { font-size:1.5em; color:white; font-weight:bold; }
-.navbar div a { margin-left:20px; color:white; font-weight:500; transition:0.3s; }
-.navbar div a:hover { color:#c8e6c9; }
-
-/* =================== HERO =================== */
 .hero {
   height:90vh;
   display:flex;
@@ -73,7 +77,6 @@ a {text-decoration:none;}
   box-shadow:0 8px 25px rgba(0,0,0,0.3);
 }
 
-/* =================== PARTICULES =================== */
 .petal, .leaf {
   position:absolute;
   font-size:25px;
@@ -87,7 +90,6 @@ a {text-decoration:none;}
   100% { transform: translateY(110vh) rotate(360deg); opacity:0; }
 }
 
-/* =================== SECTIONS =================== */
 section {
   padding:60px 20px;
   opacity:0;
@@ -99,7 +101,6 @@ section:nth-of-type(3){animation-delay:0.9s;}
 section:nth-of-type(4){animation-delay:1.2s;}
 @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
 
-/* =================== SERVICES =================== */
 .services {
   display:flex;
   flex-wrap:wrap;
@@ -120,7 +121,6 @@ section:nth-of-type(4){animation-delay:1.2s;}
   box-shadow:0 15px 35px rgba(0,0,0,0.2);
 }
 
-/* =================== STATISTIQUES JARDIN =================== */
 .stats {
   display:flex;
   flex-wrap:wrap;
@@ -159,7 +159,6 @@ section:nth-of-type(4){animation-delay:1.2s;}
   to { width: var(--percent); }
 }
 
-/* =================== MAP =================== */
 .map-container {
   max-width:900px;
   margin:auto;
@@ -169,7 +168,6 @@ section:nth-of-type(4){animation-delay:1.2s;}
 }
 .map-container iframe { width:100%; height:400px; border:0; }
 
-/* =================== AVIS VISITEURS =================== */
 .review-section {
   display:flex;
   flex-wrap:wrap;
@@ -191,7 +189,7 @@ section:nth-of-type(4){animation-delay:1.2s;}
   box-shadow:0 15px 35px rgba(0,0,0,0.2);
 }
 .review-card::before {
-  content:"“";
+  content:"\201C";
   font-size:3em;
   position:absolute;
   top:10px;
@@ -199,7 +197,7 @@ section:nth-of-type(4){animation-delay:1.2s;}
   color:#4caf50;
 }
 .review-card::after {
-  content:"”";
+  content:"\201D";
   font-size:3em;
   position:absolute;
   bottom:10px;
@@ -207,7 +205,6 @@ section:nth-of-type(4){animation-delay:1.2s;}
   color:#4caf50;
 }
 
-/* =================== FOOTER =================== */
 footer {
   background:#2e7d32;
   color:white;
@@ -231,7 +228,6 @@ footer form button {
 }
 footer form button:hover { background:#2e7d32; }
 
-/* =================== RESPONSIVE =================== */
 @media(max-width:900px){
   .services,.review-section,.stats{flex-direction:column;align-items:center;}
 }
@@ -239,94 +235,76 @@ footer form button:hover { background:#2e7d32; }
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <a href="index.html" class="logo"><span>🌱</span>GreenVerse</a>
-  <div>
-    <a href="index.html">Accueil</a>
-    <a href="jardin.html">Jardin</a>
-    <a href="tableaux.html">Infos Plantes</a>
-    <a href="ateliers.html">Ateliers</a>
-    <a href="shop.html">Boutique</a>
-    <a href="blog.html">Blog</a>
-    <a href="quiz.html">Quiz</a>
-    <a href="faq.html">FAQ</a>
-    <a href="astuce.html">Astuce du jour</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html" class="active">À propos</a>
-  </div>
-</nav>
-<!-- HERO -->
+<?php include 'navbar.php'; ?>
+
 <section class="hero">
   <h1>Bienvenue dans GreenVerse</h1>
   <p>Explorez votre jardin de manière interactive et ludique</p>
-  <a href="jardin.html" class="btn">Explorer le Jardin</a>
-
-  <!-- Particules -->
+  <a href="jardin.php" class="btn">Explorer le Jardin</a>
   <div class="petal" style="left:10%; animation-duration:5s;">🌸</div>
   <div class="petal" style="left:25%; animation-duration:6s;">🌸</div>
-  <div class="leaf" style="left:50%; animation-duration:7s;">🍃</div>
-  <div class="leaf" style="left:70%; animation-duration:8s;">🍃</div>
+  <div class="leaf"  style="left:50%; animation-duration:7s;">🍃</div>
+  <div class="leaf"  style="left:70%; animation-duration:8s;">🍃</div>
   <div class="petal" style="left:85%; animation-duration:6.5s;">🌸</div>
 </section>
 
-<!-- SERVICES -->
 <section>
-<h2>Nos services</h2>
-<div class="services">
-  <div class="service-card"><h3>Ateliers</h3><p>Participez à nos ateliers interactifs pour découvrir la culture des plantes et fleurs.</p></div>
-  <div class="service-card"><h3>Boutique</h3><p>Découvrez nos produits pour le jardinage et les plantes adaptées à votre espace.</p></div>
-  <div class="service-card"><h3>Blog</h3><p>Conseils et astuces de jardinage pour entretenir vos plantes facilement.</p></div>
-</div>
-</section>
-
-<!-- STATISTIQUES JARDIN -->
-<section>
-<h2>Statistiques du jardin</h2>
-<div class="stats">
-  <div class="stat-card">
-    <h3>75%</h3>
-    <p>Plantes fleuries</p>
-    <div class="bar"><div class="fill" style="--percent:75%;"></div></div>
+  <h2>Nos services</h2>
+  <div class="services">
+    <div class="service-card"><h3>Ateliers</h3><p>Participez à nos ateliers interactifs pour découvrir la culture des plantes et fleurs.</p></div>
+    <div class="service-card"><h3>Boutique</h3><p>Découvrez nos produits pour le jardinage et les plantes adaptées à votre espace.</p></div>
+    <div class="service-card"><h3>Blog</h3><p>Conseils et astuces de jardinage pour entretenir vos plantes facilement.</p></div>
   </div>
-  <div class="stat-card">
-    <h3>60%</h3>
-    <p>Plantes arrosées</p>
-    <div class="bar"><div class="fill" style="--percent:60%;"></div></div>
-  </div>
-  <div class="stat-card">
-    <h3>1200</h3>
-    <p>Visiteurs ce mois</p>
-    <div class="bar"><div class="fill" style="--percent:80%;"></div></div>
-  </div>
-</div>
 </section>
 
-<!-- GOOGLE MAPS -->
 <section>
-<h2>Localisation du jardin</h2>
-<div class="map-container">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019129431867!2d-122.41941548468153!3d37.774929779759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085814c7d0cbf43%3A0x4b32e0ee7a7a046f!2sSan%20Francisco!5e0!3m2!1sfr!2s!4v1699999999999!5m2!1sfr!2s" allowfullscreen="" loading="lazy"></iframe>
-</div>
+  <h2>Statistiques du jardin</h2>
+  <div class="stats">
+    <div class="stat-card">
+      <h3>75%</h3><p>Plantes fleuries</p>
+      <div class="bar"><div class="fill" style="--percent:75%;"></div></div>
+    </div>
+    <div class="stat-card">
+      <h3>60%</h3><p>Plantes arrosées</p>
+      <div class="bar"><div class="fill" style="--percent:60%;"></div></div>
+    </div>
+    <div class="stat-card">
+      <h3>1200</h3><p>Visiteurs ce mois</p>
+      <div class="bar"><div class="fill" style="--percent:80%;"></div></div>
+    </div>
+  </div>
 </section>
 
-<!-- AVIS VISITEURS -->
 <section>
-<h2>Avis des visiteurs</h2>
-<div class="review-section">
-  <div class="review-card"><p>Super expérience ! J’ai appris beaucoup sur mes plantes et je me sens plus confiant dans mon jardinage.</p><strong>- Alice</strong></div>
-  <div class="review-card"><p>GreenVerse est très intuitif et les astuces quotidiennes sont excellentes pour mes plantes.</p><strong>- Karim</strong></div>
-  <div class="review-card"><p>J’adore le design et la simplicité du site. Mon jardin n’a jamais été aussi beau !</p><strong>- Leila</strong></div>
-</div>
+  <h2>Localisation du jardin</h2>
+  <div class="map-container">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019129431867!2d-122.41941548468153!3d37.774929779759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085814c7d0cbf43%3A0x4b32e0ee7a7a046f!2sSan%20Francisco!5e0!3m2!1sfr!2s!4v1699999999999!5m2!1sfr!2s" allowfullscreen="" loading="lazy"></iframe>
+  </div>
 </section>
 
-<!-- FOOTER -->
+<section>
+  <h2>Avis des visiteurs</h2>
+  <div class="review-section">
+    <div class="review-card"><p>Super expérience ! J'ai appris beaucoup sur mes plantes.</p><strong>- Alice</strong></div>
+    <div class="review-card"><p>GreenVerse est très intuitif et les astuces sont excellentes.</p><strong>- Karim</strong></div>
+    <div class="review-card"><p>Mon jardin n'a jamais été aussi beau !</p><strong>- Leila</strong></div>
+  </div>
+</section>
+
 <footer>
-<p>© 2025 GreenVerse</p>
-<form>
-<input type="email" placeholder="Votre email">
-<button>S'abonner</button>
-</form>
+  <p>© 2025 GreenVerse</p>
+  <form>
+    <input type="email" placeholder="Votre email">
+    <button>S'abonner</button>
+  </form>
 </footer>
+
+<script>
+  // Bloquer retour par flèche après logout
+  window.history.pushState(null, '', window.location.href);
+  window.addEventListener('popstate', function() {
+    window.history.pushState(null, '', window.location.href);
+  });
+</script>
 </body>
 </html>
