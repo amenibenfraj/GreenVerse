@@ -344,7 +344,7 @@ session_start();
 
 <!-- ================= SCRIPT JS ================= -->
 <script>
-  const BASE = 'http://localhost/projet%20php%20IA/GreenVerse';
+  const BASE = 'http://localhost/Green%20verse/GreenVerse';
   let currentId = null;
 
   const categories = [

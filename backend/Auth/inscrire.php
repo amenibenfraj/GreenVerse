@@ -1,49 +1,50 @@
 <?php
 session_start();
-
-// Connexion à la base de données
 require '../config/db.php';
 
-// ── Récupérer les données du formulaire ──
-$prenom    = $_POST['prenom'];
-$nom       = $_POST['nom'];
-$email     = $_POST['email'];
-$telephone = $_POST['telephone'];
-$password  = $_POST['password'];
-$role      = 'utilisateur'; // toujours utilisateur à l'inscription
+$prenom    = trim($_POST['prenom']    ?? '');
+$nom       = trim($_POST['nom']       ?? '');
+$email     = trim($_POST['email']     ?? '');
+$password  = $_POST['password']       ?? '';
+$telephone = trim($_POST['telephone'] ?? '');
+$role      = 'utilisateur';
 
-// ── Vérifications simples ──
-if (empty($prenom) || empty($nom) || empty($email) || empty($password) || empty($telephone)) {
-    die("Erreur : tous les champs sont obligatoires.");
+if (empty($prenom) || empty($nom) || empty($email) || empty($password)) {
+    header("Location: ../../projet jardin v2/projet jardin/auth.php?tab=register&error=champs_vides");
+    exit;
 }
 
-if (strlen($password) < 8) {
-    die("Erreur : le mot de passe doit contenir au moins 8 caractères.");
+// Connexion PDO
+$database = new Database();
+$conn     = $database->getConnection();
+
+// Vérifier si email existe déjà
+$stmt = $conn->prepare("SELECT id FROM users WHERE email = :email");
+$stmt->bindParam(':email', $email);
+$stmt->execute();
+
+if ($stmt->fetch()) {
+    header("Location: ../../projet jardin v2/projet jardin/auth.php?tab=register&error=email_existe");
+    exit;
 }
 
-// ── Vérifier si l'email existe déjà ──
-$check = mysqli_query($connect_db, "SELECT id FROM users WHERE email = '$email'");
-if (mysqli_num_rows($check) > 0) {
-    die("Erreur : cet email est déjà utilisé.");
-}
+// Hasher le mot de passe
+$password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-// ── Hasher le mot de passe (sécurité) ──
-$password_hash = password_hash($password, PASSWORD_BCRYPT);
+// Insérer l'utilisateur
+$stmt = $conn->prepare("INSERT INTO users (prenom, nom, email, telephone, password, role) VALUES (:prenom, :nom, :email, :telephone, :password, :role)");
+$stmt->bindParam(':prenom',    $prenom);
+$stmt->bindParam(':nom',       $nom);
+$stmt->bindParam(':email',     $email);
+$stmt->bindParam(':telephone', $telephone);
+$stmt->bindParam(':password',  $password_hash);
+$stmt->bindParam(':role',      $role);
 
-// ── Insérer l'utilisateur dans la base ──
-$sql = "INSERT INTO users (prenom, nom, email, telephone, password, role)
-        VALUES ('$prenom', '$nom', '$email', '$telephone', '$password_hash', '$role')";
-
-if (mysqli_query($connect_db, $sql)) {
-    // Inscription réussie → on enregistre la session
-    $_SESSION['user_id']   = mysqli_insert_id($connect_db);
-    $_SESSION['user_nom']  = $prenom . ' ' . $nom;
-    $_SESSION['user_role'] = $role;
-
-    // Redirection vers la page login
-     header("Location: ../../projet jardin v2/projet jardin/auth.php");
+if ($stmt->execute()) {
+    header("Location: ../../projet jardin v2/projet jardin/auth.php?success=compte_cree");
     exit;
 } else {
-    die("Erreur lors de l'inscription : " . mysqli_error($connect_db));
+    header("Location: ../../projet jardin v2/projet jardin/auth.php?tab=register&error=erreur_inscription");
+    exit;
 }
 ?>

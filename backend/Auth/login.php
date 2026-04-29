@@ -1,27 +1,33 @@
 <?php
 session_start();
 require '../config/db.php';
-$email = $_POST['email'];
-$password = $_POST['password'];
+
+$email    = $_POST['email'] ?? '';
+$password = $_POST['password'] ?? '';
 
 if (empty($email) || empty($password)) {
-    die("Veuillez remplir tous les champs");
+    header("Location: ../../projet jardin v2/projet jardin/auth.php?error=champs_vides");
+    exit;
 }
 
-// Requête sécurisée (IMPORTANT)
-$stmt = $connect_db->prepare("SELECT * FROM users WHERE email = ?");
-$stmt->bind_param("s", $email);
+// Connexion PDO
+$database = new Database();
+$conn     = $database->getConnection();
+
+// Requête PDO avec prepare
+$stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
+$stmt->bindParam(':email', $email);
 $stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($user && password_verify($password, $user['password'])) {
 
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['user_nom'] = $user['prenom'] . ' ' . $user['nom'];
+    session_regenerate_id(true);
+
+    $_SESSION['user_id']   = $user['id'];
+    $_SESSION['user_nom']  = $user['prenom'] . ' ' . $user['nom'];
     $_SESSION['user_role'] = $user['role'];
 
-    // Redirection selon le rôle
     if ($user['role'] === 'admin') {
         header("Location: ../../projet jardin v2/projet jardin/admindash.php");
     } else {
@@ -30,6 +36,7 @@ if ($user && password_verify($password, $user['password'])) {
     exit;
 
 } else {
-    echo "Email ou mot de passe incorrect";
+    header("Location: ../../projet jardin v2/projet jardin/auth.php?error=identifiants_incorrects");
+    exit;
 }
 ?>
