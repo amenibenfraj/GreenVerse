@@ -1,5 +1,5 @@
 <?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
-
+<?php $role = $_SESSION['role'] ?? 'guest'; ?>
 <style>
 .navbar {
   display: flex;
@@ -113,6 +113,7 @@
 <nav class="navbar">
   <a href="index.php" class="logo"><span>🌱</span>GreenVerse</a>
   <div class="nav-links">
+    
     <a href="index.php">Accueil</a>
     <a href="jardin.php">Jardin</a>
     <a href="tableaux.php">Infos Plantes</a>

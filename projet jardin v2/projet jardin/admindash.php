@@ -1,6 +1,21 @@
 <?php
 session_start();
 
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+
+// Si NON connecté → login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: auth.php");
+    exit;
+}
+
+// Si admin → dashboard
+if ($_SESSION['user_role'] === 'admin') {
+    header("Location: admindash.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
