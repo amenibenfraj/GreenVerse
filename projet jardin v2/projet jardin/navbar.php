@@ -1,5 +1,5 @@
 <?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
-<?php $role = $_SESSION['role'] ?? 'guest'; ?>
+
 <style>
 .navbar {
   display: flex;
@@ -110,33 +110,51 @@
 .user-card-link.logout:hover { background: #fff0f0; }
 </style>
 
+
 <nav class="navbar">
   <a href="index.php" class="logo"><span>🌱</span>GreenVerse</a>
   <div class="nav-links">
-    
-    <a href="index.php">Accueil</a>
-    <a href="jardin.php">Jardin</a>
-    <a href="tableaux.php">Infos Plantes</a>
-    <a href="ateliers.php">Ateliers</a>
-    <a href="shop.php">Boutique</a>
-    <a href="blog.php">Blog</a>
-    <a href="quiz.php">Quiz</a>
-    <a href="faq.php">FAQ</a>
-    <a href="astuce.php">Astuce du jour</a>
-    <a href="contact.php">Contact</a>
-    <a href="about.php">À propos</a>
+
+    <?php if (isset($_SESSION['user_id']) && $_SESSION['user_role'] === 'admin'): ?>
+      <!-- MENU ADMIN -->
+      <a href="admindash.php">Dashboard</a>
+      <a href="jardin.php">Jardin</a>
+      <a href="ateliers.php">Ateliers</a>
+      <a href="shop.php">Boutique</a>
+      
+
+    <?php elseif (isset($_SESSION['user_id'])): ?>
+      <!-- MENU USER -->
+      <a href="index.php">Accueil</a>
+            <a href="ateliers.php">Ateliers</a>
+
+      <a href="shop.php">Boutique</a>
+      <a href="panier.php">Panier</a>
+      <a href="blog.php">Blog</a>
+      <a href="quiz.php">Quiz</a>
+      <a href="faq.php">FAQ</a>
+      <a href="astuce.php">Astuce du jour</a>
+       <a href="about.php">À propos</a>
+
+    <?php else: ?>
+      <!-- MENU VISITEUR NON CONNECTÉ -->
+      <a href="auth.php">Se connecter</a>
+    <?php endif; ?>
 
     <?php if (isset($_SESSION['user_id'])): ?>
       <div class="user-menu" id="userMenu">
         <span class="user-trigger" onclick="toggleDropdown()">
-          👤 <?= htmlspecialchars($_SESSION['user_nom']); ?> ▾
+          <?= $_SESSION['user_role'] === 'admin' ? '👑' : '👤' ?>
+          <?= htmlspecialchars($_SESSION['user_nom']); ?> ▾
         </span>
         <div class="user-card" id="userCard">
           <div class="user-card-header">
-            <div class="user-avatar">👤</div>
+            <div class="user-avatar">
+              <?= $_SESSION['user_role'] === 'admin' ? '👑' : '👤' ?>
+            </div>
             <div>
               <strong><?= htmlspecialchars($_SESSION['user_nom']); ?></strong>
-              <small>Membre GreenVerse</small>
+              <small><?= $_SESSION['user_role'] === 'admin' ? 'Administrateur' : 'Membre GreenVerse' ?></small>
             </div>
           </div>
           <hr>
@@ -144,9 +162,8 @@
           <a href="../../backend/Auth/logout.php" class="user-card-link logout">🚪 Se déconnecter</a>
         </div>
       </div>
-    <?php else: ?>
-      <a href="auth.php">Se connecter</a>
     <?php endif; ?>
+
   </div>
 </nav>
 
