@@ -45,7 +45,7 @@ if (!empty($_GET['id'])) {
 
 } else {
 
-    $query = "SELECT * FROM produits ORDER BY created_at DESC";
+$query = "SELECT * FROM produits ORDER BY id DESC";
     $stmt  = $db->prepare($query);
 
     try {

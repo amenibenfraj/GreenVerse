@@ -240,7 +240,8 @@ footer form button:hover { background:#2e7d32; }
 <section class="hero">
   <h1>Bienvenue dans GreenVerse</h1>
   <p>Explorez votre jardin de manière interactive et ludique</p>
-  <a href="jardin.php" class="btn">Explorer le Jardin</a>
+  <!-- <a href="jardin.php" class="btn">Explorer le Jardin</a> -->
+  
   <div class="petal" style="left:10%; animation-duration:5s;">🌸</div>
   <div class="petal" style="left:25%; animation-duration:6s;">🌸</div>
   <div class="leaf"  style="left:50%; animation-duration:7s;">🍃</div>
@@ -293,10 +294,7 @@ footer form button:hover { background:#2e7d32; }
 
 <footer>
   <p>© 2025 GreenVerse</p>
-  <form>
-    <input type="email" placeholder="Votre email">
-    <button>S'abonner</button>
-  </form>
+  
 </footer>
 
 <script>

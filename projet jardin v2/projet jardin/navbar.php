@@ -126,15 +126,15 @@
     <?php elseif (isset($_SESSION['user_id'])): ?>
       <!-- MENU USER -->
       <a href="index.php">Accueil</a>
-            <a href="ateliers.php">Ateliers</a>
+             <a href="ateliers.php">Ateliers</a>
 
       <a href="shop.php">Boutique</a>
       <a href="panier.php">Panier</a>
-      <a href="blog.php">Blog</a>
-      <a href="quiz.php">Quiz</a>
+       <a href="quiz.php">Quiz</a>
       <a href="faq.php">FAQ</a>
       <a href="astuce.php">Astuce du jour</a>
-       <a href="about.php">À propos</a>
+      
+      <a href="about.php">À propos</a>
 
     <?php else: ?>
       <!-- MENU VISITEUR NON CONNECTÉ -->
@@ -158,7 +158,6 @@
             </div>
           </div>
           <hr>
-          <a href="profil.php" class="user-card-link">⚙️ Mon profil</a>
           <a href="../../backend/Auth/logout.php" class="user-card-link logout">🚪 Se déconnecter</a>
         </div>
       </div>

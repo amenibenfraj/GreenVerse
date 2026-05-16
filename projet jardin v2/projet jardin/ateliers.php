@@ -19,7 +19,6 @@ try {
     die(json_encode(['success' => false, 'message' => 'DB Error: ' . $e->getMessage()]));
 }
 
-// ── Création automatique de la table si elle n'existe pas ──────────────────
 $pdo->exec("
     CREATE TABLE IF NOT EXISTS `ateliers` (
         `id`           INT          NOT NULL AUTO_INCREMENT,
@@ -32,7 +31,6 @@ $pdo->exec("
         PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 ");
-// ───────────────────────────────────────────────────────────────────────────
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     header('Content-Type: application/json');
@@ -42,12 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $stmt = $pdo->prepare("INSERT INTO ateliers (titre, description, date_atelier, heure, lieu, video)
                                VALUES (:titre, :description, :date_atelier, :heure, :lieu, :video)");
         $stmt->execute([
-            ':titre' => trim($_POST['titre']),
-            ':description' => trim($_POST['description']),
+            ':titre'        => trim($_POST['titre']),
+            ':description'  => trim($_POST['description']),
             ':date_atelier' => $_POST['date_atelier'],
-            ':heure' => $_POST['heure'],
-            ':lieu' => trim($_POST['lieu']),
-            ':video' => trim($_POST['video']),
+            ':heure'        => $_POST['heure'],
+            ':lieu'         => trim($_POST['lieu']),
+            ':video'        => trim($_POST['video']),
         ]);
         echo json_encode(['success' => true, 'id' => $pdo->lastInsertId(), 'message' => 'Atelier créé avec succès !']);
     }
@@ -57,13 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                                date_atelier=:date_atelier, heure=:heure, lieu=:lieu, video=:video
                                WHERE id=:id");
         $stmt->execute([
-            ':titre' => trim($_POST['titre']),
-            ':description' => trim($_POST['description']),
+            ':titre'        => trim($_POST['titre']),
+            ':description'  => trim($_POST['description']),
             ':date_atelier' => $_POST['date_atelier'],
-            ':heure' => $_POST['heure'],
-            ':lieu' => trim($_POST['lieu']),
-            ':video' => trim($_POST['video']),
-            ':id' => (int)$_POST['id'],
+            ':heure'        => $_POST['heure'],
+            ':lieu'         => trim($_POST['lieu']),
+            ':video'        => trim($_POST['video']),
+            ':id'           => (int)$_POST['id'],
         ]);
         echo json_encode(['success' => true, 'message' => 'Atelier mis à jour !']);
     }
@@ -87,6 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 $ateliers = $pdo->query("SELECT * FROM ateliers ORDER BY date_atelier ASC")->fetchAll();
 
 $palettes = ['fleurs','potager','aromatiques','arbustes','arbres','aquatiques','grimpantes'];
+
+$isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_role'] === 'admin';
+$isUser  = isset($_SESSION['user_id']) && $_SESSION['user_role'] !== 'admin';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -434,12 +435,15 @@ textarea { resize: vertical; min-height: 80px; }
 <section class="hero">
   <h1>🌿 Nos Ateliers</h1>
   <p>Rejoignez nos ateliers et apprenez à cultiver, créer et s'épanouir dans la nature.</p>
+
+  <?php if ($isAdmin): ?>
   <button class="btn-add-atelier" onclick="openModal()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
       <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
     </svg>
     Ajouter un atelier
   </button>
+  <?php endif; ?>
 </section>
 
 <section class="cards-container" id="cardsContainer">
@@ -450,7 +454,7 @@ textarea { resize: vertical; min-height: 80px; }
   </div>
 <?php else: ?>
   <?php foreach ($ateliers as $i => $a):
-    $palette = $palettes[$i % count($palettes)];
+    $palette       = $palettes[$i % count($palettes)];
     $dateFormatted = date('d/m/Y', strtotime($a['date_atelier']));
     $heureFormatted = substr($a['heure'], 0, 5);
     $emojis = ['fleurs'=>'🌹','potager'=>'🥕','aromatiques'=>'🌿','arbustes'=>'🌸','arbres'=>'🌳','aquatiques'=>'💧','grimpantes'=>'🍃'];
@@ -458,6 +462,7 @@ textarea { resize: vertical; min-height: 80px; }
   ?>
   <div class="flip-container" id="card-<?= $a['id'] ?>">
     <div class="flip-card">
+
       <!-- FRONT -->
       <div class="flip-front <?= $palette ?>">
         <div class="plant-emoji"><?= $emoji ?></div>
@@ -467,6 +472,7 @@ textarea { resize: vertical; min-height: 80px; }
           <span class="date-badge" style="margin-top:5px;">📍 <?= htmlspecialchars($a['lieu']) ?></span>
         <?php endif; ?>
       </div>
+
       <!-- BACK -->
       <div class="flip-back <?= $palette ?>">
         <?php if ($a['video']): ?>
@@ -474,19 +480,24 @@ textarea { resize: vertical; min-height: 80px; }
           <iframe src="<?= htmlspecialchars($a['video']) ?>" allowfullscreen loading="lazy"></iframe>
         </div>
         <?php endif; ?>
+
         <p><?= nl2br(htmlspecialchars($a['description'])) ?></p>
-        <div class="action-btns">
-          <button class="btn-edit"
-            onclick="event.stopPropagation(); openEditModal(<?= $a['id'] ?>)"
-            style="color:inherit;">✏️ Modifier</button>
-          <button class="btn-delete"
-            onclick="event.stopPropagation(); confirmDelete(<?= $a['id'] ?>, '<?= addslashes($a['titre']) ?>')"
-            style="color:inherit;">🗑 Supprimer</button>
-        </div>
-        <!-- BOUTON S'INSCRIRE -->
-        <a href="inscription.php" class="btn-inscrire" onclick="event.stopPropagation()">
-          🌿 S'inscrire à cet atelier
-        </a>
+
+        <?php if ($isAdmin): ?>
+          <div class="action-btns">
+            <button class="btn-edit"
+              onclick="event.stopPropagation(); openEditModal(<?= $a['id'] ?>)"
+              style="color:inherit;">✏️ Modifier</button>
+            <button class="btn-delete"
+              onclick="event.stopPropagation(); confirmDelete(<?= $a['id'] ?>, '<?= addslashes($a['titre']) ?>')"
+              style="color:inherit;">🗑 Supprimer</button>
+          </div>
+        <?php elseif ($isUser): ?>
+          <a href="inscription.php" class="btn-inscrire" onclick="event.stopPropagation()">
+            🌿 S'inscrire à cet atelier
+          </a>
+        <?php endif; ?>
+
       </div>
     </div>
   </div>
@@ -494,7 +505,8 @@ textarea { resize: vertical; min-height: 80px; }
 <?php endif; ?>
 </section>
 
-<!-- MODAL AJOUT / MODIFICATION -->
+<!-- MODAL AJOUT / MODIFICATION (admin uniquement) -->
+<?php if ($isAdmin): ?>
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -540,7 +552,7 @@ textarea { resize: vertical; min-height: 80px; }
   </div>
 </div>
 
-<!-- CONFIRM DELETE -->
+<!-- CONFIRM DELETE (admin uniquement) -->
 <div class="confirm-overlay" id="confirmOverlay" onclick="closeConfirm(event)">
   <div class="confirm-box">
     <h3>⚠️ Supprimer l'atelier</h3>
@@ -551,6 +563,7 @@ textarea { resize: vertical; min-height: 80px; }
     </div>
   </div>
 </div>
+<?php endif; ?>
 
 <div class="toast" id="toast"></div>
 
@@ -564,7 +577,8 @@ function showToast(msg, isError = false) {
   setTimeout(() => { t.className = 'toast'; }, 3200);
 }
 
-function openModal(id = null) {
+<?php if ($isAdmin): ?>
+function openModal() {
   document.getElementById('atelierIdField').value = '';
   document.getElementById('titreField').value = '';
   document.getElementById('descField').value = '';
@@ -573,7 +587,7 @@ function openModal(id = null) {
   document.getElementById('lieuField').value = '';
   document.getElementById('videoField').value = '';
   document.getElementById('modalTitle').textContent = '🌱 Nouvel Atelier';
-  document.getElementById('submitBtn').textContent = '✅ Enregistrer l\'atelier';
+  document.getElementById('submitBtn').textContent = "✅ Enregistrer l'atelier";
   document.getElementById('modalOverlay').classList.add('active');
 }
 
@@ -587,31 +601,31 @@ async function openEditModal(id) {
   fd.append('action', 'get');
   fd.append('id', id);
 
-  const res = await fetch('', { method: 'POST', body: fd });
+  const res  = await fetch('', { method: 'POST', body: fd });
   const json = await res.json();
 
   if (!json.success) { showToast('Erreur lors du chargement', true); return; }
 
   const d = json.data;
   document.getElementById('atelierIdField').value = d.id;
-  document.getElementById('titreField').value = d.titre;
-  document.getElementById('descField').value = d.description;
-  document.getElementById('dateField').value = d.date_atelier;
-  document.getElementById('heureField').value = d.heure ? d.heure.substring(0,5) : '';
-  document.getElementById('lieuField').value = d.lieu || '';
-  document.getElementById('videoField').value = d.video || '';
-  document.getElementById('modalTitle').textContent = '✏️ Modifier l\'Atelier';
-  document.getElementById('submitBtn').textContent = '💾 Mettre à jour';
+  document.getElementById('titreField').value     = d.titre;
+  document.getElementById('descField').value      = d.description;
+  document.getElementById('dateField').value      = d.date_atelier;
+  document.getElementById('heureField').value     = d.heure ? d.heure.substring(0,5) : '';
+  document.getElementById('lieuField').value      = d.lieu  || '';
+  document.getElementById('videoField').value     = d.video || '';
+  document.getElementById('modalTitle').textContent  = "✏️ Modifier l'Atelier";
+  document.getElementById('submitBtn').textContent   = '💾 Mettre à jour';
   document.getElementById('modalOverlay').classList.add('active');
 }
 
 async function saveAtelier() {
-  const id = document.getElementById('atelierIdField').value;
+  const id    = document.getElementById('atelierIdField').value;
   const titre = document.getElementById('titreField').value.trim();
-  const desc = document.getElementById('descField').value.trim();
-  const date = document.getElementById('dateField').value;
+  const desc  = document.getElementById('descField').value.trim();
+  const date  = document.getElementById('dateField').value;
   const heure = document.getElementById('heureField').value || '00:00';
-  const lieu = document.getElementById('lieuField').value.trim();
+  const lieu  = document.getElementById('lieuField').value.trim();
   const video = document.getElementById('videoField').value.trim();
 
   if (!titre || !desc || !date) {
@@ -629,7 +643,7 @@ async function saveAtelier() {
   fd.append('lieu', lieu);
   fd.append('video', video);
 
-  const res = await fetch('', { method: 'POST', body: fd });
+  const res  = await fetch('', { method: 'POST', body: fd });
   const json = await res.json();
 
   if (json.success) {
@@ -659,7 +673,7 @@ async function doDelete() {
   fd.append('action', 'delete');
   fd.append('id', deleteId);
 
-  const res = await fetch('', { method: 'POST', body: fd });
+  const res  = await fetch('', { method: 'POST', body: fd });
   const json = await res.json();
 
   closeConfirm({});
@@ -668,8 +682,8 @@ async function doDelete() {
     const card = document.getElementById('card-' + deleteId);
     if (card) {
       card.style.transition = 'opacity .4s, transform .4s';
-      card.style.opacity = '0';
-      card.style.transform = 'scale(.85)';
+      card.style.opacity    = '0';
+      card.style.transform  = 'scale(.85)';
       setTimeout(() => { card.remove(); }, 420);
     }
   } else {
@@ -684,6 +698,7 @@ document.addEventListener('keydown', e => {
     closeConfirm({});
   }
 });
+<?php endif; ?>
 </script>
 
 </body>
